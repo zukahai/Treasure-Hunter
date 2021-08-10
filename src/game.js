@@ -11,10 +11,7 @@ const TextureCache = utils.TextureCache;
 
 export class Game extends Application {
     constructor() {
-        super({
-            width: 512,
-            height: 512,
-        });
+        super({ width: 512, height: 512 });
         this.renderer.view.style.position = "absolute";
         this.renderer.view.style.top = "50%";
         this.renderer.view.style.left = "50%";
@@ -59,6 +56,14 @@ export class Game extends Application {
             this.blob[i].direction = (Math.random() < 0.5) ? 1 : -1;
         }
 
+        this.message = new Text("", new TextStyle({
+            fontFamily: "Futura",
+            fontSize: 64,
+            fill: "white",
+        }));
+        this.message.x = 120;
+        this.message.y = this.stage.height / 2 - 32;
+        this.gameOverScene.addChild(this.message);
 
         this.setupController();
         this.ticker.add((delta) => this.loop(delta));
@@ -72,6 +77,11 @@ export class Game extends Application {
         for (let i = 0; i < Nblob; i++) {
             this.moveBlob(this.blob[i]);
             this.UpdateExplorer(this.blob[i]);
+        }
+        if (this.explorer.y > this.stage.height / 2) {
+            this.end();
+            this.message.text = "You won!";
+            this.ticker.stop();
         }
     }
 
