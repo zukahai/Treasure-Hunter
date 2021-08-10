@@ -5,6 +5,7 @@ import Keyboard from "./keyboard.js";
 
 let SpeedExplorer = 5;
 let margin = 0;
+let Nblob = 6;
 
 const TextureCache = utils.TextureCache;
 
@@ -45,14 +46,19 @@ export class Game extends Application {
             this.stage.height / 10
         );
 
-        this.blob = new SpriteObject(
-            this.gameScene,
-            TextureCache["blob.png"]
-        );
-        this.blob.setPosition(
-            100,
-            100
-        );
+        this.blob = [];
+        for (let i = 0; i < Nblob; i++) {
+            this.blob[i] = new SpriteObject(
+                this.gameScene,
+                TextureCache["blob.png"]
+            );
+            this.blob[i].setPosition(
+                this.stage.width / 5 + i * this.stage.width / 9,
+                Math.random() * this.stage.height
+            );
+            this.blob[i].direction = (Math.random() < 0.5) ? 1 : -1;
+        }
+
 
         this.setupController();
         this.ticker.add((delta) => this.loop(delta));
@@ -62,7 +68,11 @@ export class Game extends Application {
     loop(delta) {
         // console.log(this.explorer.x, ' ', this.explorer.y);
         this.explorer.update(1);
-        this.UpdateExplorer();
+        this.UpdateExplorer(this.explorer);
+        for (let i = 0; i < Nblob; i++) {
+            this.moveBlob(this.blob[i]);
+            this.UpdateExplorer(this.blob[i]);
+        }
     }
 
     end() {
@@ -70,15 +80,22 @@ export class Game extends Application {
         this.gameOverScene.setVisible(true);
     }
 
-    UpdateExplorer() {
-        if (this.explorer.x < margin)
-            this.explorer.x = margin;
-        if (this.explorer.y < margin)
-            this.explorer.y = margin;
-        if (this.explorer.x > this.stage.width - margin - this.explorer.width)
-            this.explorer.x = this.stage.width - margin - this.explorer.width;
-        if (this.explorer.y > this.stage.height - margin - this.explorer.height)
-            this.explorer.y = this.stage.height - margin - this.explorer.height;
+    moveBlob(blob) {
+        blob.vy = blob.direction * SpeedExplorer / 2;
+        blob.update(1);
+        if (blob.y < margin || blob.y > this.stage.height - margin - blob.height)
+            blob.direction *= -1;
+    }
+
+    UpdateExplorer(sprite) {
+        if (sprite.x < margin)
+            sprite.x = margin;
+        if (sprite.y < margin)
+            sprite.y = margin;
+        if (sprite.x > this.stage.width - margin - sprite.width)
+            sprite.x = this.stage.width - margin - sprite.width;
+        if (sprite.y > this.stage.height - margin - sprite.height)
+            sprite.y = this.stage.height - margin - sprite.height;
     }
 
     setupController() {
@@ -106,7 +123,6 @@ export class Game extends Application {
                 this.explorer.vx = SpeedExplorer;
             else
                 this.explorer.vx = 0;
-            console.log("Hello");
         });
 
         down.setPress(() => {
@@ -126,7 +142,6 @@ export class Game extends Application {
 
         right.setRelease(() => {
             this.explorer.vx = 0;
-            console.log("2");
         });
 
         down.setRelease(() => {
