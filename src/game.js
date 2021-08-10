@@ -72,7 +72,10 @@ export class Game extends Application {
 
     loop(delta) {
         // console.log(this.explorer.x, ' ', this.explorer.y);
-        this.explorer.update(1);
+        if (this.explorer.vx * this.explorer.vy == 0)
+            this.explorer.update(1);
+        else
+            this.explorer.update(1 / Math.sqrt(2));
         this.UpdateExplorer(this.explorer);
         for (let i = 0; i < Nblob; i++) {
             this.moveBlob(this.blob[i]);
@@ -100,8 +103,8 @@ export class Game extends Application {
     UpdateExplorer(sprite) {
         if (sprite.x < margin)
             sprite.x = margin;
-        if (sprite.y < margin)
-            sprite.y = margin;
+        if (sprite.y < margin / 2)
+            sprite.y = margin / 2;
         if (sprite.x > this.stage.width - margin - sprite.width)
             sprite.x = this.stage.width - margin - sprite.width;
         if (sprite.y > this.stage.height - margin - sprite.height)
