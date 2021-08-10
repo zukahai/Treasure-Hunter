@@ -44,7 +44,15 @@ export class Game extends Application {
             this.stage.height / 10,
             this.stage.height / 10
         );
-        // this.explorer.vx = 1;
+
+        this.blob = new SpriteObject(
+            this.gameScene,
+            TextureCache["blob.png"]
+        );
+        this.blob.setPosition(
+            100,
+            100
+        );
 
         this.setupController();
         this.ticker.add((delta) => this.loop(delta));
@@ -52,7 +60,7 @@ export class Game extends Application {
     }
 
     loop(delta) {
-        console.log(this.explorer.x, ' ', this.explorer.y);
+        // console.log(this.explorer.x, ' ', this.explorer.y);
         this.explorer.update(1);
         this.UpdateExplorer();
     }
