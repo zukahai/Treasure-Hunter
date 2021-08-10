@@ -31,14 +31,15 @@ export class Game extends Application {
 
         this.dungeon = new SpriteObject(
             this.gameScene,
-            TextureCache["dungeon.png"]
+            TextureCache["dungeon.png"],
+            0,
+            0
         );
 
         this.explorer = new SpriteObject(
             this.gameScene,
-            TextureCache["explorer.png"]
-        );
-        this.explorer.setPosition(
+            TextureCache["explorer.png"],
+            this.stage.height / 10,
             this.stage.height / 10,
             this.stage.height / 10
         );
@@ -47,11 +48,9 @@ export class Game extends Application {
         for (let i = 0; i < Nblob; i++) {
             this.blob[i] = new SpriteObject(
                 this.gameScene,
-                TextureCache["blob.png"]
-            );
-            this.blob[i].setPosition(
+                TextureCache["blob.png"],
                 this.stage.width / 5 + i * this.stage.width / 9,
-                Math.random() * this.stage.height
+                this.stage.height / 2 + (Math.random() - Math.random()) * this.stage.height / 3
             );
             this.blob[i].direction = (Math.random() < 0.5) ? 1 : -1;
         }

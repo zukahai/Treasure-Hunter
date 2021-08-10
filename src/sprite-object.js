@@ -2,9 +2,11 @@ import { Sprite } from 'pixi.js';
 
 export default class SpriteObject extends Sprite {
 
-    constructor(parent, textureCache) {
+    constructor(parent, textureCache, x, y) {
         super(textureCache);
         parent.addChild(this);
+        this.setPosition(x, y);
+        console.log(x, ' ', y);
     }
 
     setPosition(x, y) {
