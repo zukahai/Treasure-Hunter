@@ -36,10 +36,25 @@ export class Game extends Application {
             0
         );
 
+        margin = this.stage.width / 20;
+
+        this.door = new SpriteObject(
+            this.gameScene,
+            TextureCache["door.png"],
+            this.stage.width / 17,
+            0
+        );
+
+        this.treasure = new SpriteObject(
+            this.gameScene,
+            TextureCache["treasure.png"],
+            this.stage.width - 3 * margin,
+            this.stage.height - 3 * margin
+        );
+
         this.explorer = new SpriteObject(
             this.gameScene,
             TextureCache["explorer.png"],
-            this.stage.height / 10,
             this.stage.height / 10,
             this.stage.height / 10
         );
@@ -66,7 +81,6 @@ export class Game extends Application {
 
         this.setupController();
         this.ticker.add((delta) => this.loop(delta));
-        margin = this.stage.width / 20;
     }
 
     loop(delta) {

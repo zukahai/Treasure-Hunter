@@ -6,7 +6,6 @@ export default class SpriteObject extends Sprite {
         super(textureCache);
         parent.addChild(this);
         this.setPosition(x, y);
-        console.log(x, ' ', y);
     }
 
     setPosition(x, y) {
