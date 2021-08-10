@@ -3,7 +3,8 @@ import Scene from "./scene.js";
 import SpriteObject from "./sprite-object.js";
 import Keyboard from "./keyboard.js";
 
-let SpeedExplorer = 1;
+let SpeedExplorer = 5;
+let margin = 0;
 
 const TextureCache = utils.TextureCache;
 
@@ -47,16 +48,29 @@ export class Game extends Application {
 
         this.setupController();
         this.ticker.add((delta) => this.loop(delta));
+        margin = this.stage.width / 20;
     }
 
     loop(delta) {
-        // console.log(this.explorer.x, ' ', this.explorer.y);
+        console.log(this.explorer.x, ' ', this.explorer.y);
         this.explorer.update(1);
+        this.UpdateExplorer();
     }
 
     end() {
         this.gameScene.setVisible(false);
         this.gameOverScene.setVisible(true);
+    }
+
+    UpdateExplorer() {
+        if (this.explorer.x < margin)
+            this.explorer.x = margin;
+        if (this.explorer.y < margin)
+            this.explorer.y = margin;
+        if (this.explorer.x > this.stage.width - margin - this.explorer.width)
+            this.explorer.x = this.stage.width - margin - this.explorer.width;
+        if (this.explorer.y > this.stage.height - margin - this.explorer.height)
+            this.explorer.y = this.stage.height - margin - this.explorer.height;
     }
 
     setupController() {
@@ -68,25 +82,34 @@ export class Game extends Application {
         left.setPress(() => {
             if (this.explorer.x > 0)
                 this.explorer.vx = -SpeedExplorer;
+            else
+                this.explorer.vx = 0;
         });
 
         up.setPress(() => {
-            if (this.explorer.y > 0) this.explorer.vy = -SpeedExplorer;
+            if (this.explorer.y > 0)
+                this.explorer.vy = -SpeedExplorer;
+            else
+                this.explorer.vy = 0;
         });
 
         right.setPress(() => {
-            if (this.explorer.x < this.stage.width - this.explorer.width / 2)
+            if (this.explorer.x < this.stage.width - this.explorer.width / 2 - margin)
                 this.explorer.vx = SpeedExplorer;
+            else
+                this.explorer.vx = 0;
             console.log("Hello");
         });
 
         down.setPress(() => {
-            if (this.explorer.y < this.stage.width - this.explorer.height / 2) this.explorer.vy = SpeedExplorer;
+            if (this.explorer.y < this.stage.width - this.explorer.height / 2 - margin)
+                this.explorer.vy = SpeedExplorer;
+            else
+                this.explorer.vy = 0;
         });
 
         left.setRelease(() => {
-            if (left.isDown)
-                this.explorer.vx = 0;
+            this.explorer.vx = 0;
         });
 
         up.setRelease(() => {

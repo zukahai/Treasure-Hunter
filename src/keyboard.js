@@ -10,11 +10,9 @@ export default class Keyboard {
 
     setPress(fn) {
         this.press = fn;
-        console.log("B");
     }
 
     setRelease(fn) {
-        console.log("A");
         this.release = fn;
     }
 
@@ -34,11 +32,12 @@ export default class Keyboard {
     }
 
     upListener(event) {
-        console.log(event.key);
-        this.release();
-        this.isDown = false;
-        this.isUp = true;
-        event.preventDefault();
+        if (event.key === this.value) {
+            this.release();
+            this.isDown = false;
+            this.isUp = true;
+            event.preventDefault();
+        }
     }
 
     unsubscribe() {
