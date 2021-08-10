@@ -78,9 +78,9 @@ export class Game extends Application {
             this.moveBlob(this.blob[i]);
             this.UpdateExplorer(this.blob[i]);
         }
-        if (this.explorer.y > this.stage.height / 2) {
+        if (this.checkCollision()) {
             this.end();
-            this.message.text = "You won!";
+            this.message.text = "You lose!";
             this.ticker.stop();
         }
     }
@@ -106,6 +106,17 @@ export class Game extends Application {
             sprite.x = this.stage.width - margin - sprite.width;
         if (sprite.y > this.stage.height - margin - sprite.height)
             sprite.y = this.stage.height - margin - sprite.height;
+    }
+
+    checkCollision() {
+        for (let i = 0; i < Nblob; i++)
+            if (this.distance(this.explorer.x + this.explorer.width / 2 - this.blob[i].x, this.explorer.y + this.explorer.height / 2 - this.blob[i].y) < this.explorer.width / 2)
+                return true;
+        return false;
+    }
+
+    distance(x, y) {
+        return Math.sqrt(x * x + y * y);
     }
 
     setupController() {
