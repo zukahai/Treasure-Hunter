@@ -3,6 +3,7 @@ import Scene from "./scene.js";
 import SpriteObject from "./sprite-object.js";
 import Keyboard from "./keyboard.js";
 
+let SpeedExplorer = 1;
 
 const TextureCache = utils.TextureCache;
 
@@ -65,25 +66,27 @@ export class Game extends Application {
             down = new Keyboard("ArrowDown");
 
         left.setPress(() => {
-            if (this.explorer.x > 0) this.explorer.vx = -5;
-            console.log("Hello");
+            if (this.explorer.x > 0)
+                this.explorer.vx = -SpeedExplorer;
         });
 
         up.setPress(() => {
-            if (this.explorer.y > 0) this.explorer.vy = -5;
+            if (this.explorer.y > 0) this.explorer.vy = -SpeedExplorer;
         });
 
         right.setPress(() => {
-            if (this.explorer.x < this.stage.width - this.explorer.width / 2) this.explorer.vx = 5;
+            if (this.explorer.x < this.stage.width - this.explorer.width / 2)
+                this.explorer.vx = SpeedExplorer;
+            console.log("Hello");
         });
 
         down.setPress(() => {
-            if (this.explorer.y < this.stage.width - this.explorer.height / 2) this.explorer.vy = 5;
+            if (this.explorer.y < this.stage.width - this.explorer.height / 2) this.explorer.vy = SpeedExplorer;
         });
 
         left.setRelease(() => {
-            console.log("left");
-            this.explorer.vx = 0;
+            if (left.isDown)
+                this.explorer.vx = 0;
         });
 
         up.setRelease(() => {
@@ -92,6 +95,7 @@ export class Game extends Application {
 
         right.setRelease(() => {
             this.explorer.vx = 0;
+            console.log("2");
         });
 
         down.setRelease(() => {

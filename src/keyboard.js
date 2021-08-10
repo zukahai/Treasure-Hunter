@@ -1,5 +1,5 @@
 export default class Keyboard {
-    constructor(value){
+    constructor(value) {
         this.value = value;
         this.isDown = false;
         this.isUp = true;
@@ -8,15 +8,17 @@ export default class Keyboard {
         this.handle();
     }
 
-    setPress(fn){
+    setPress(fn) {
         this.press = fn;
+        console.log("B");
     }
 
-    setRelease(fn){
+    setRelease(fn) {
+        console.log("A");
         this.release = fn;
     }
 
-    handle(){
+    handle() {
         window.addEventListener(
             "keydown", (event) => this.downListener(event), false
         );
@@ -24,25 +26,24 @@ export default class Keyboard {
             "keyup", (event) => this.upListener(event), false
         );
     }
-    
+
     downListener(event) {
-        if (event.key === this.value) 
-            if (this.isUp && this.press) 
+        if (event.key === this.value)
+            if (this.isUp && this.press)
                 this.press();
     }
 
     upListener(event) {
-        if (event.key === this.value) {
-            if (this.isDown && this.release) this.release();
-            this.isDown = false;
-            this.isUp = true;
-            event.preventDefault();
-        }
+        console.log(event.key);
+        this.release();
+        this.isDown = false;
+        this.isUp = true;
+        event.preventDefault();
     }
 
     unsubscribe() {
         window.removeEventListener("keydown", this.downListener);
         window.removeEventListener("keyup", this.upListener);
     }
-    
+
 }
