@@ -18,7 +18,9 @@ export default class SpriteObject extends Sprite {
     }
 
     update(delta) {
-        this.x += this.vx * delta;
-        this.y += this.vy * delta;
+        if (this.vx != undefined)
+            this.x += this.vx * delta;
+        if (this.vy != undefined)
+            this.y += this.vy * delta;
     }
 }

@@ -42,14 +42,15 @@ export class Game extends Application {
             this.stage.height / 10,
             this.stage.height / 10
         );
-        this.explorer.vx = 1;
+        // this.explorer.vx = 1;
 
         this.setupController();
         this.ticker.add((delta) => this.loop(delta));
     }
 
     loop(delta) {
-
+        // console.log(this.explorer.x, ' ', this.explorer.y);
+        this.explorer.update(1);
     }
 
     end() {
@@ -64,19 +65,37 @@ export class Game extends Application {
             down = new Keyboard("ArrowDown");
 
         left.setPress(() => {
-            if (this.explorer.x > 28) this.explorer.x -= 5;
+            if (this.explorer.x > 0) this.explorer.vx = -5;
+            console.log("Hello");
         });
 
         up.setPress(() => {
-            if (this.explorer.y > 20) this.explorer.y -= 5;
+            if (this.explorer.y > 0) this.explorer.vy = -5;
         });
 
         right.setPress(() => {
-            if (this.explorer.x < 512 - 50) this.explorer.x += 5;
+            if (this.explorer.x < this.stage.width - this.explorer.width / 2) this.explorer.vx = 5;
         });
 
         down.setPress(() => {
-            if (this.explorer.y < 512 - 65) this.explorer.y += 5;
+            if (this.explorer.y < this.stage.width - this.explorer.height / 2) this.explorer.vy = 5;
+        });
+
+        left.setRelease(() => {
+            console.log("left");
+            this.explorer.vx = 0;
+        });
+
+        up.setRelease(() => {
+            this.explorer.vy = 0;
+        });
+
+        right.setRelease(() => {
+            this.explorer.vx = 0;
+        });
+
+        down.setRelease(() => {
+            this.explorer.vy = 0;
         });
     }
 }
