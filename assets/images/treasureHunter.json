@@ -18,11 +18,11 @@
             "pivot": { "x": 0.5, "y": 0.5 }
         },
         "dungeon.png": {
-            "frame": { "x": 0, "y": 32, "w": 512, "h": 512 },
+            "frame": { "x": 5, "y": 37, "w": 507, "h": 507 },
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": { "x": 0, "y": 0, "w": 512, "h": 512 },
-            "sourceSize": { "w": 512, "h": 512 },
+            "spriteSourceSize": { "x": 0, "y": 0, "w": 502, "h": 502 },
+            "sourceSize": { "w": 502, "h": 502 },
             "pivot": { "x": 0.5, "y": 0.5 }
         },
         "explorer.png": {

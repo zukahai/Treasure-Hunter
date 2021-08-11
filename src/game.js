@@ -6,12 +6,13 @@ import Keyboard from "./keyboard.js";
 let SpeedExplorer = 5;
 let margin = 0;
 let Nblob = 6;
+let checktreasure = false;
 
 const TextureCache = utils.TextureCache;
 
 export class Game extends Application {
     constructor() {
-        super({ width: 512, height: 512 });
+        super({ width: 502, height: 502 });
         this.renderer.view.style.position = "absolute";
         this.renderer.view.style.top = "50%";
         this.renderer.view.style.left = "50%";
@@ -94,11 +95,23 @@ export class Game extends Application {
             this.moveBlob(this.blob[i]);
             this.UpdateExplorer(this.blob[i]);
         }
+
         if (this.checkCollision()) {
             this.end();
             this.message.text = "You lose!";
             this.ticker.stop();
         }
+
+        if (this.distance(this.door.x - this.treasure.x, this.door.y - this.treasure.y) < margin) {
+            this.end();
+            this.message.text = "You won!";
+            this.ticker.stop();
+        }
+
+        if (this.distance(this.explorer.x - this.treasure.x, this.explorer.y - this.treasure.y) < margin / 2)
+            checktreasure = true;
+        if (checktreasure)
+            this.treasure.setPosition(this.explorer.x + this.explorer.width / 2, this.explorer.y + this.explorer.height - this.treasure.height);
     }
 
     end() {
@@ -126,7 +139,7 @@ export class Game extends Application {
 
     checkCollision() {
         for (let i = 0; i < Nblob; i++)
-            if (this.distance(this.explorer.x + this.explorer.width / 2 - this.blob[i].x, this.explorer.y + this.explorer.height / 2 - this.blob[i].y) < this.explorer.width / 2)
+            if (this.distance(this.explorer.x + this.explorer.width / 2 - this.blob[i].x - this.blob[i].width / 2, this.explorer.y + this.explorer.height / 2 - this.blob[i].y - this.blob[i].height / 2) < margin)
                 return true;
         return false;
     }
