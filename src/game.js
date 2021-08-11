@@ -21,7 +21,8 @@ export class Game extends Application {
     }
 
     load() {
-        this.loader.add("../assets/images/treasureHunter.json").load(() => this.setup());
+        this.loader.add("./dist/images/treasureHunter.json");
+        this.loader.load(() => this.setup());
     }
 
     setup() {
