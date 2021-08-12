@@ -99,7 +99,7 @@ export class Game extends Application {
 
         if (this.checkCollision()) {
             this.end();
-            this.message.text = "You lose!";
+            this.message.text = "You lost!";
             this.ticker.stop();
         }
 
